@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>gings_on | 학교 분실물 찾기</title>
+<style>
+:root{--ink:#172b3a;--muted:#697987;--bg:#f4f7f8;--paper:#fff;--accent:#397b78;--accent2:#d9ece7;--line:#e4eaed;--orange:#f1a66b}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,"Noto Sans KR",sans-serif}
+header{background:var(--ink);color:white;padding:24px 5vw 30px}header .top{display:flex;justify-content:space-between;align-items:center;gap:12px}header h1{margin:0;font-size:30px;letter-spacing:-1px}header p{color:#c9d7df;margin:8px 0 0}.btn{border:0;border-radius:12px;padding:11px 15px;font-weight:700;cursor:pointer;background:var(--accent);color:white}.btn.secondary{background:white;color:var(--ink);border:1px solid var(--line)}.btn.warn{background:#b84d4d}.btn.small{padding:8px 11px;font-size:13px}
+main{max-width:1050px;margin:26px auto;padding:0 16px}.intro{display:flex;justify-content:space-between;align-items:end;gap:12px;margin-bottom:18px}.intro h2{margin:0;font-size:24px}.intro p{color:var(--muted);margin:7px 0 0}.tabs{display:flex;gap:8px;margin-bottom:18px}.tab{background:white;border:1px solid var(--line);padding:10px 14px;border-radius:12px;cursor:pointer;font-weight:700}.tab.active{background:var(--accent);color:white;border-color:var(--accent)}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:20px;margin-bottom:18px;box-shadow:0 3px 12px #172b3a08}.panel h3{margin:0 0 16px}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.field{display:flex;flex-direction:column;gap:7px}.field.full{grid-column:1/-1}label{font-size:14px;font-weight:700}input,select,textarea{font:inherit;padding:12px;border:1px solid #d9e2e6;border-radius:11px;background:#fff;color:var(--ink);width:100%}textarea{min-height:95px;resize:vertical}.photo-preview{max-width:180px;max-height:180px;border-radius:12px;object-fit:cover;display:none;margin-top:10px}.hint{font-size:12px;color:var(--muted)}.filterrow{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0}.filterrow>*{flex:1;min-width:140px}.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(245px,1fr));gap:16px}.itemcard{overflow:hidden;background:white;border:1px solid var(--line);border-radius:16px}.itemcard img{width:100%;height:190px;object-fit:cover;background:#e9eff1}.itemcard .body{padding:15px}.itemcard h3{margin:0 0 9px;font-size:18px}.tag{display:inline-block;background:var(--accent2);color:#245b58;padding:5px 9px;border-radius:999px;font-size:12px;font-weight:700;margin:0 5px 7px 0}.meta{font-size:13px;color:var(--muted);margin:7px 0}.desc{white-space:pre-wrap;font-size:14px;line-height:1.5}.cardactions{display:flex;gap:8px;margin-top:12px}.cardactions button{flex:1}.empty{text-align:center;color:var(--muted);padding:45px 10px}.hidden{display:none!important}.foot{font-size:12px;color:var(--muted);text-align:center;padding:22px}.modal{position:fixed;inset:0;background:#0c1925aa;display:flex;align-items:center;justify-content:center;padding:18px;z-index:5}.modalbox{background:white;border-radius:18px;padding:24px;max-width:390px;width:100%}.modalbox h3{margin-top:0}.modalbox input{margin:10px 0}.modalactions{display:flex;gap:10px;margin-top:12px}.modalactions>*{flex:1}
+@media(max-width:650px){.formgrid{grid-template-columns:1fr}.intro{align-items:start;flex-direction:column}header h1{font-size:26px}}
+</style>
+</head>
+<body>
+<header>
+ <div class="top"><div><h1>gings_on <span style="font-size:15px;color:#c9d7df">Lost & Found</span></h1><p>우리 학교 분실물, 함께 찾기</p></div><button class="btn secondary" id="adminBtn">운영자 로그인</button></div>
+</header>
+<main>
+ <div class="intro"><div><h2>분실물 게시판</h2><p>잃어버린 물건이나 발견한 물건을 등록해 보세요.</p></div></div>
+ <div class="tabs"><button class="tab active" data-filter="all">전체 게시물</button><button class="tab" data-filter="lost">잃어버렸어요</button><button class="tab" data-filter="found">찾았어요</button></div>
+ <section class="panel" id="formPanel">
+  <h3>📌 분실물 등록하기</h3>
+  <form id="postForm">
+   <div class="formgrid">
+    <div class="field"><label for="status">게시물 종류</label><select id="status"><option value="lost">잃어버렸어요</option><option value="found">찾았어요</option></select></div>
+    <div class="field"><label for="category">물품 종류</label><select id="category"><option>옷</option><option>필기도구</option><option>가방</option><option>전자기기</option><option>물병·텀블러</option><option>책·교재</option><option>악세서리</option><option>카드·지갑</option><option>기타</option></select></div>
+    <div class="field"><label for="itemName">품목 이름 *</label><input id="itemName" maxlength="60" placeholder="예: 검은색 후드, 파란색 필통" required></div>
+    <div class="field"><label for="location">습득 / 분실 위치 *</label><select id="location" required><option value="">위치를 선택하세요</option><option>운동장</option><option>교실</option><option>본관</option><option>신관 교실</option><option>복도</option><option>도서관</option><option>급식실</option><option>체육관</option><option>기타 학교 공간</option></select></div>
+    <div class="field"><label for="date">날짜</label><input id="date" type="date"></div>
+    <div class="field"><label for="contact">연락 방법 (선택)</label><input id="contact" maxlength="80" placeholder="예: 10학년 3반 / 게시판 댓글 대신"></div>
+    <div class="field full"><label for="photo">사진 (선택)</label><input id="photo" type="file" accept="image/*" capture="environment"><span class="hint">카메라로 촬영하거나 갤러리에서 사진을 선택할 수 있어요.</span><img class="photo-preview" id="preview" alt="선택한 사진 미리보기"></div>
+    <div class="field full"><label for="details">상세 설명 (선택)</label><textarea id="details" maxlength="500" placeholder="색상, 특징, 발견한 상황 등"></textarea></div>
+   </div>
+   <button class="btn" style="margin-top:16px;width:100%" type="submit">게시물 등록</button>
+  </form>
+ </section>
+ <section>
+  <div class="filterrow"><input id="search" placeholder="품목 또는 설명 검색"><select id="catFilter"><option value="">모든 종류</option><option>옷</option><option>필기도구</option><option>가방</option><option>전자기기</option><option>물병·텀블러</option><option>책·교재</option><option>악세서리</option><option>카드·지갑</option><option>기타</option></select><select id="locFilter"><option value="">모든 위치</option><option>운동장</option><option>교실</option><option>본관</option><option>신관 교실</option><option>복도</option><option>도서관</option><option>급식실</option><option>체육관</option><option>기타 학교 공간</option></select></div>
+  <div id="cards" class="cards"></div><div id="empty" class="empty hidden">게시물이 없습니다. 첫 게시물을 등록해 보세요!</div>
+ </section>
+ <div class="foot">gings_on · 학교 공동 분실물 게시판<br>게시물에 개인 정보나 민감한 정보를 올리지 않도록 주의해 주세요.</div>
+</main>
+<div id="adminModal" class="modal hidden"><div class="modalbox"><h3>운영자 로그인</h3><p class="hint">운영자 비밀번호를 입력하세요.</p><input type="password" id="adminPassword" placeholder="비밀번호"><div class="modalactions"><button class="btn secondary" id="cancelAdmin">취소</button><button class="btn" id="loginAdmin">로그인</button></div><p class="hint" id="loginError"></p></div></div>
+<script>
+/* 데모 관리자 비밀번호입니다. 변경하세요. HTML에 비밀번호를 두는 방식은 실제 보안이 아닙니다. */
+const ADMIN_PASSWORD = "change-this-password";
+const STORAGE_KEY = "gings_on_posts_v1";
+let posts = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+let admin = false, currentTab = "all";
+const $=id=>document.getElementById(id);
+const fileInput=$("photo");
+fileInput.addEventListener("change",()=>{const f=fileInput.files[0];if(!f){$("preview").style.display="none";return}const r=new FileReader();r.onload=()=>{$("preview").src=r.result;$("preview").style.display="block"};r.readAsDataURL(f)});
+function save(){localStorage.setItem(STORAGE_KEY,JSON.stringify(posts));render()}
+function esc(s){return String(s||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function render(){
+ const query=$("search").value.toLowerCase(),cat=$("catFilter").value,loc=$("locFilter").value;
+ const filtered=posts.filter(p=>(currentTab==="all"||p.status===currentTab)&&(!cat||p.category===cat)&&(!loc||p.location===loc)&&(!query||(p.name+" "+p.details+" "+p.category).toLowerCase().includes(query)));
+ $("cards").innerHTML=filtered.map(p=>`<article class="itemcard">${p.photo?`<img src="${p.photo}" alt="분실물 사진">`:`<div style="height:190px;background:#e9eff1;display:grid;place-items:center;color:#789">사진 없음</div>`}<div class="body"><span class="tag">${p.status==="lost"?"분실":"습득"}</span><span class="tag">${esc(p.category)}</span><h3>${esc(p.name)}</h3><p class="meta">📍 ${esc(p.location)} · ${esc(p.date||"날짜 미입력")}</p>${p.contact?`<p class="meta">연락: ${esc(p.contact)}</p>`:""}${p.details?`<p class="desc">${esc(p.details)}</p>`:""}${admin?`<div class="cardactions"><button class="btn warn small" onclick="deletePost('${p.id}')">게시물 삭제</button></div>`:""}</div></article>`).join("");
+ $("empty").classList.toggle("hidden",filtered.length>0);
+ $("adminBtn").textContent=admin?"운영자 로그아웃":"운영자 로그인";
+}
+function deletePost(id){if(!admin)return;if(confirm("이 게시물을 삭제할까요?")){posts=posts.filter(p=>p.id!==id);save()}}
+$("postForm").addEventListener("submit",e=>{e.preventDefault();const f=fileInput.files[0];const submitPost=photo=>{posts.unshift({id:Date.now().toString(),status:$("status").value,category:$("category").value,name:$("itemName").value.trim(),location:$("location").value,date:$("date").value,contact:$("contact").value.trim(),details:$("details").value.trim(),photo,created:Date.now()});save();e.target.reset();$("preview").style.display="none";alert("게시물이 등록되었습니다.")};if(f){const r=new FileReader();r.onload=()=>submitPost(r.result);r.readAsDataURL(f)}else submitPost("")});
+document.querySelectorAll(".tab").forEach(t=>t.addEventListener("click",()=>{currentTab=t.dataset.filter;document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("active",x===t));render()}));
+$("search").addEventListener("input",render);$("catFilter").addEventListener("change",render);$("locFilter").addEventListener("change",render);
+$("adminBtn").addEventListener("click",()=>{if(admin){admin=false;render()}else{$("adminModal").classList.remove("hidden");$("adminPassword").focus()}});
+$("cancelAdmin").addEventListener("click",()=>{$("adminModal").classList.add("hidden");$("loginError").textContent=""});
+$("loginAdmin").addEventListener("click",()=>{if($("adminPassword").value===ADMIN_PASSWORD){admin=true;$("adminModal").classList.add("hidden");$("adminPassword").value="";$("loginError").textContent="";render()}else $("loginError").textContent="비밀번호가 올바르지 않습니다."});
+$("adminPassword").addEventListener("keydown",e=>{if(e.key==="Enter")$("loginAdmin").click()});
+$("date").value=new Date().toISOString().slice(0,10);render();
+</script>
+</body>
+</html>
