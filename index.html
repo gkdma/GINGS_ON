@@ -21,21 +21,22 @@
   <section class="hero"><div><h2>잃어버린 물건, 다시 찾아봄 🔎</h2><p>우리 학교에서 발견한 물건을 등록하고<br>분실한 물건의 주인을 함께 찾아주세요.</p></div><div class="hero-mark">🎒</div></section>
   <section class="stats">
     <div class="stat"><b id="totalCount">0</b><span>전체 게시물</span></div>
-    <div class="stat"><b id="lostCount">0</b><span>주인 찾는 중</span></div>
-    <div class="stat"><b id="foundCount">0</b><span>주인 찾음</span></div>
+    <div class="stat"><b id="lostCount">0</b><span>해결 전 게시물</span></div>
+    <div class="stat"><b id="foundCount">0</b><span>해결 완료</span></div>
   </section>
   <main class="layout">
     <aside class="panel">
-      <h3>분실물 등록하기</h3><p class="sub">발견한 물건의 정보를 입력해 주세요.</p>
+      <h3>분실물 등록하기</h3><p class="sub">주운 물건 또는 잃어버린 물건의 정보를 등록해 주세요.</p>
       <form id="postForm">
-        <div class="field"><label for="photo">물건 사진</label><label class="upload" for="photo"><strong>＋ 사진 찍기 / 갤러리에서 선택</strong>사진을 추가하면 찾는 데 도움이 돼요.<input id="photo" type="file" accept="image/*" capture="environment"></label><img id="preview" class="preview" alt="업로드 사진 미리보기"></div>
+        <div class="field"><label for="reportType">어떤 게시물을 올릴까요? *</label><select id="reportType" required><option value="found">물건을 주웠어요 (습득물 등록)</option><option value="lost">물건을 잃어버렸어요 (분실 신고)</option></select><p class="hint">주운 물건은 습득물로, 내가 잃어버린 물건은 분실 신고로 등록해 주세요.</p></div>
+        <div class="field"><label for="photo">물건 사진 (선택)</label><label class="upload" for="photo"><strong>＋ 사진 찍기 / 갤러리에서 선택</strong>사진을 추가하면 찾는 데 도움이 돼요.<input id="photo" type="file" accept="image/*" capture="environment"></label><img id="preview" class="preview" alt="업로드 사진 미리보기"></div>
         <div class="field"><label for="itemName">물품 이름 *</label><input id="itemName" required maxlength="40" placeholder="예: 검정색 카드지갑"></div>
         <div class="two">
           <div class="field"><label for="category">물품 종류 *</label><select id="category" required><option value="">선택</option><option>옷</option><option>필기도구</option><option>가방</option><option>전자기기</option><option>카드·지갑</option><option>책·학습용품</option><option>물병·텀블러</option><option>악세서리</option><option>기타</option></select></div>
-          <div class="field"><label for="where">습득 위치 *</label><select id="where" required><option value="">선택</option><option>운동장</option><option>교실</option><option>본관</option><option>신관 교실</option><option>급식실</option><option>도서관</option><option>체육관</option><option>복도·계단</option><option>화장실</option><option>기타</option></select></div>
+          <div class="field"><label for="where">분실하거나 발견한 위치 *</label><select id="where" required><option value="">선택</option><option>운동장</option><option>교실</option><option>본관</option><option>신관 교실</option><option>급식실</option><option>도서관</option><option>체육관</option><option>복도·계단</option><option>화장실</option><option>기타</option></select></div>
         </div>
         <div class="two">
-          <div class="field"><label for="when">발견 날짜</label><input id="when" type="date"></div>
+          <div class="field"><label for="when">분실하거나 발견한 날짜</label><input id="when" type="date"></div>
           <div class="field"><label for="grade">학년 (선택)</label><select id="grade"><option value="">선택 안 함</option><option>1학년</option><option>2학년</option><option>3학년</option></select></div>
         </div>
         <div class="field"><label for="detail">상세 설명</label><textarea id="detail" maxlength="180" placeholder="색상, 특징, 발견한 장소 등을 적어주세요."></textarea></div>
@@ -48,7 +49,7 @@
       <div class="list-head"><h3>분실물 게시판</h3><span class="count" id="resultCount">0개</span></div>
       <div class="admin-state" id="adminState">운영자 모드입니다. 게시글을 삭제할 수 있어요.</div>
       <div class="tools"><input class="search" id="search" placeholder="물품 이름이나 설명 검색하기"><select class="search" id="sort" style="max-width:118px;flex:0 0 118px"><option value="new">최신순</option><option value="old">오래된순</option></select></div>
-      <div class="filters" id="filters"><button class="chip active" data-filter="all">전체</button><button class="chip" data-filter="open">주인 찾는 중</button><button class="chip" data-filter="found">찾았어요</button><button class="chip" data-filter="옷">옷</button><button class="chip" data-filter="필기도구">필기도구</button><button class="chip" data-filter="가방">가방</button><button class="chip" data-filter="전자기기">전자기기</button><button class="chip" data-filter="기타">기타</button></div>
+      <div class="filters" id="filters"><button class="chip active" data-filter="all">전체</button><button class="chip" data-filter="lost">잃어버렸어요</button><button class="chip" data-filter="found">주웠어요</button><button class="chip" data-filter="resolved">찾았어요</button><button class="chip" data-filter="옷">옷</button><button class="chip" data-filter="필기도구">필기도구</button><button class="chip" data-filter="가방">가방</button><button class="chip" data-filter="전자기기">전자기기</button><button class="chip" data-filter="기타">기타</button></div>
       <div class="cards" id="cards"></div>
       <p class="notice">※ 이 페이지는 학교 구성원을 위한 분실물 공유용입니다. 물건을 돌려받을 때는 물건의 특징을 확인하고, 귀중품은 선생님께 전달해 주세요.</p>
     </section>
@@ -79,15 +80,15 @@ function toast(msg){$("toast").textContent=msg;$("toast").style.display="block";
 function updateStats(){$("totalCount").textContent=posts.length;$("foundCount").textContent=posts.filter(p=>p.found).length;$("lostCount").textContent=posts.filter(p=>!p.found).length}
 function render(){
  updateStats(); const q=$("search").value.trim().toLowerCase(), sort=$("sort").value;
- let arr=posts.filter(p=>(activeFilter==="all"||(activeFilter==="open"&&!p.found)||(activeFilter==="found"&&p.found)||p.category===activeFilter)&&(!q||[p.name,p.category,p.where,p.detail,p.grade].join(" ").toLowerCase().includes(q)));
+ let arr=posts.filter(p=>{const type=p.reportType||"found";const matches=activeFilter==="all"||(activeFilter==="lost"&&type==="lost"&&!p.found)||(activeFilter==="found"&&type==="found"&&!p.found)||(activeFilter==="resolved"&&p.found)||p.category===activeFilter;return matches&&(!q||[p.name,p.category,p.where,p.detail,p.grade].join(" ").toLowerCase().includes(q));});
  arr.sort((a,b)=>sort==="new"?b.created-a.created:a.created-b.created); $("resultCount").textContent=arr.length+"개";
  $("cards").innerHTML=arr.length?arr.map(p=>`<article class="item">
  <div class="photo">${p.photo?`<img src="${p.photo}" alt="${esc(p.name)} 사진">`:"📦"}</div>
- <div class="item-body"><div class="item-top"><span class="tag ${p.found?"found":""}">${p.found?"✓ 주인 찾음":"주인 찾는 중"}</span><span class="tag">${esc(p.category)}</span></div>
+ <div class="item-body"><div class="item-top"><span class="tag ${p.found?"found":""}">${p.found?"✓ 찾았어요":((p.reportType||"found")==="lost"?"잃어버렸어요":"주웠어요")}</span><span class="tag">${esc(p.category)}</span></div>
  <h4>${esc(p.name)}</h4><div class="meta">📍 ${esc(p.where)}　·　${esc(p.date||"날짜 미입력")}<br>👤 ${esc(p.grade||"학년 미입력")} ${esc(p.poster||"익명")}</div>
  ${p.detail?`<p class="desc">${esc(p.detail)}</p>`:""}
- <div class="item-actions">${!p.found?`<button class="found-btn" onclick="markFound('${p.id}')">찾았어요</button>`:`<button onclick="markLost('${p.id}')">다시 찾는 중</button>`}${isAdmin?`<button class="delete-btn" onclick="deletePost('${p.id}')">삭제</button>`:""}</div>
- </div></article>`).join(""):`<div class="empty"><div style="font-size:34px;margin-bottom:10px">🧺</div><b>아직 게시물이 없어요</b>물건을 등록하거나 검색 조건을 바꿔보세요.</div>`;
+ <div class="item-actions">${!p.found?`<button class="found-btn" onclick="markFound('${p.id}')">해결됐어요</button>`:`<button onclick="markLost('${p.id}')">다시 진행 중</button>`}${isAdmin?`<button class="delete-btn" onclick="deletePost('${p.id}')">삭제</button>`:""}</div>
+ </div></article>`).join(""):`<div class="empty"><div style="font-size:34px;margin-bottom:10px">🧺</div><b>아직 게시물이 없어요</b>분실 신고나 습득물 게시물을 등록하거나 검색 조건을 바꿔보세요.</div>`;
  $("adminState").style.display=isAdmin?"block":"none";$("adminBtn").style.display=isAdmin?"none":"inline-block";$("logoutBtn").style.display=isAdmin?"inline-block":"none";
 }
 window.markFound=id=>{const p=posts.find(x=>x.id===id);if(p){p.found=true;save();render();toast("찾았어요로 분류했어요!")}};
@@ -95,7 +96,7 @@ window.markLost=id=>{const p=posts.find(x=>x.id===id);if(p){p.found=false;save()
 window.deletePost=id=>{if(!isAdmin)return;if(confirm("이 게시글을 삭제할까요? 삭제한 게시글은 복구할 수 없어요.")){posts=posts.filter(p=>p.id!==id);save();render();toast("게시글을 삭제했어요.")}};
 $("photo").addEventListener("change",e=>{const f=e.target.files[0];if(!f)return;if(!f.type.startsWith("image/")){toast("이미지 파일만 올릴 수 있어요.");return}if(f.size>3*1024*1024){toast("사진은 3MB 이하로 선택해 주세요.");e.target.value="";return}const r=new FileReader();r.onload=()=>{photoData=r.result;$("preview").src=photoData;$("preview").style.display="block"};r.readAsDataURL(f)});
 $("when").value=new Date().toISOString().slice(0,10);
-$("postForm").addEventListener("submit",e=>{e.preventDefault();const p={id:crypto.randomUUID?crypto.randomUUID():String(Date.now()),name:$("itemName").value.trim(),category:$("category").value,where:$("where").value,date:$("when").value,grade:$("grade").value,detail:$("detail").value.trim(),poster:$("poster").value.trim()||"익명",photo:photoData,found:false,created:Date.now()};if(!p.name||!p.category||!p.where)return;posts.unshift(p);save();e.target.reset();$("when").value=new Date().toISOString().slice(0,10);photoData="";$("preview").style.display="none";render();toast("분실물을 게시했어요!")});
+$("postForm").addEventListener("submit",e=>{e.preventDefault();const p={id:crypto.randomUUID?crypto.randomUUID():String(Date.now()),reportType:$("reportType").value,name:$("itemName").value.trim(),category:$("category").value,where:$("where").value,date:$("when").value,grade:$("grade").value,detail:$("detail").value.trim(),poster:$("poster").value.trim()||"익명",photo:photoData,found:false,created:Date.now()};if(!p.name||!p.category||!p.where)return;posts.unshift(p);save();e.target.reset();$("when").value=new Date().toISOString().slice(0,10);photoData="";$("preview").style.display="none";render();toast("분실물을 게시했어요!")});
 $("filters").addEventListener("click",e=>{const b=e.target.closest("button[data-filter]");if(!b)return;activeFilter=b.dataset.filter;document.querySelectorAll(".chip").forEach(x=>x.classList.toggle("active",x===b));render()});
 $("search").addEventListener("input",render);$("sort").addEventListener("change",render);
 $("adminBtn").onclick=()=>$("loginModal").style.display="flex";$("closeModal").onclick=()=>$("loginModal").style.display="none";
