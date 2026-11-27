@@ -1,95 +1,27 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#173b70">
-<title>GINGS_ON | 분실물·습득물 센터</title>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>gings_on — 분실물 찾기</title>
 <style>
-:root{--navy:#173b70;--blue:#2864b5;--sky:#eef5ff;--ink:#172033;--muted:#7b8798;--line:#e4e9f0;--bg:#f5f7fb;--green:#16834b;--red:#b94a40}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans KR",sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer}
-header{background:linear-gradient(120deg,#102b54,#24569a);color:white;padding:22px max(20px,calc((100% - 1080px)/2));display:flex;align-items:center;justify-content:space-between;gap:20px}
-.brand{display:flex;align-items:center;gap:12px}.logo{width:44px;height:44px;border-radius:14px;background:#fff;color:var(--navy);display:grid;place-items:center;font-weight:900;font-size:19px;letter-spacing:-1px}.brand strong{font-size:22px;letter-spacing:1.5px}.brand small{display:block;color:#c8d8f1;font-size:11px;letter-spacing:1px;margin-top:2px}.topnote{font-size:13px;color:#dbe7f8}
-main{max-width:1080px;margin:30px auto;padding:0 20px}.hero{display:flex;justify-content:space-between;align-items:end;margin-bottom:22px;gap:15px}.eyebrow{font-size:12px;font-weight:800;color:var(--blue);letter-spacing:1.5px}.hero h1{margin:6px 0;font-size:27px}.hero p{margin:0;color:var(--muted);font-size:14px}.status{background:#e9f6ef;color:#197347;border-radius:30px;padding:9px 14px;font-size:12px;font-weight:700;white-space:nowrap}
-.layout{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(300px,.92fr);gap:22px;align-items:start}.panel{background:white;border:1px solid var(--line);border-radius:20px;padding:24px;box-shadow:0 8px 28px #1b37600a}.panel h2{font-size:18px;margin:0 0 5px}.sub{font-size:12px;color:var(--muted);margin:0 0 22px}
-.typegrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:22px}.type{border:1.5px solid var(--line);border-radius:15px;background:white;padding:17px 12px;text-align:center;color:var(--ink);transition:.2s}.type .emoji{font-size:25px;display:block;margin-bottom:6px}.type b{display:block;font-size:16px}.type span:last-child{display:block;color:var(--muted);font-size:12px;margin-top:3px}.type.active.lost{border-color:var(--red);background:#fff7f5;box-shadow:0 0 0 2px #b94a4010}.type.active.found{border-color:var(--green);background:#f1fbf5;box-shadow:0 0 0 2px #16834b10}
-.field{margin:0 0 17px}.field label{display:flex;justify-content:space-between;font-size:13px;font-weight:750;margin-bottom:8px}.field label em{font-style:normal;color:var(--muted);font-weight:500;font-size:11px}.field input,.field select,.field textarea{width:100%;border:1px solid #dce2eb;border-radius:11px;padding:13px 14px;outline:none;background:#fff;color:var(--ink);transition:.15s}.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px #2864b51a}.field textarea{resize:vertical;min-height:92px}.field input::placeholder,.field textarea::placeholder{color:#a1aab7}
-.upload{border:1.5px dashed #cbd5e2;background:#fafcff;border-radius:14px;padding:22px;text-align:center;display:block;cursor:pointer;color:var(--muted)}.upload .cloud{font-size:28px}.upload b{display:block;color:var(--ink);margin:5px 0}.upload small{font-size:11px}.upload input{display:none}.preview{display:none;max-width:100%;max-height:190px;object-fit:contain;margin:14px auto 0;border-radius:10px}.hint{font-size:11px;color:var(--muted);margin-top:6px}
-.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}.mapbtn{width:100%;border:1px dashed #b9cce5;background:#f1f6fd;color:#315b8d;padding:12px;border-radius:11px;font-size:13px;font-weight:700;margin-top:-3px}.actions{display:flex;gap:10px;margin-top:23px}.primary,.secondary{border:0;border-radius:12px;padding:14px 18px;font-weight:800}.primary{background:var(--blue);color:white;flex:1}.primary:hover{background:#1e5299}.secondary{background:#f0f3f8;color:#566273}
-.sidehead{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}.count{font-size:11px;color:var(--blue);background:var(--sky);padding:6px 10px;border-radius:20px;font-weight:800}.search{display:flex;gap:8px;margin-bottom:15px}.search input{min-width:0;flex:1;border:1px solid var(--line);border-radius:10px;padding:11px 12px;outline:none}.search button{border:0;border-radius:10px;background:var(--navy);color:white;padding:0 15px;font-weight:700}.filters{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:16px}.filter{border:1px solid var(--line);background:white;color:#687486;border-radius:20px;padding:7px 12px;font-size:11px}.filter.active{background:var(--navy);border-color:var(--navy);color:white}
-.items{display:grid;gap:10px}.item{border:1px solid var(--line);border-radius:14px;padding:13px;display:grid;grid-template-columns:66px 1fr;gap:12px}.thumb{height:66px;border-radius:11px;background:#edf2f8;display:grid;place-items:center;font-size:26px;overflow:hidden}.thumb img{width:100%;height:100%;object-fit:cover}.itemtop{display:flex;justify-content:space-between;gap:8px;align-items:center}.item h3{font-size:14px;margin:0}.tag{font-size:10px;padding:4px 8px;border-radius:20px;font-weight:800;white-space:nowrap}.tag.lost{background:#fff0ed;color:var(--red)}.tag.found{background:#eaf7ef;color:var(--green)}.meta{font-size:11px;color:var(--muted);margin-top:6px;line-height:1.6}.empty{padding:32px 10px;text-align:center;color:var(--muted);font-size:13px}.itemdesc{font-size:12px;color:#596579;margin-top:5px;line-height:1.5}
-footer{text-align:center;color:#9aa4b2;font-size:11px;padding:28px 15px 38px}
-.toast{position:fixed;left:50%;bottom:25px;transform:translate(-50%,20px);background:#172c4d;color:white;padding:12px 18px;border-radius:12px;font-size:13px;opacity:0;pointer-events:none;transition:.25s;box-shadow:0 8px 24px #0002}.toast.show{opacity:1;transform:translate(-50%,0)}
-@media(max-width:760px){header{padding:17px 20px}.topnote{display:none}main{margin:22px auto;padding:0 14px}.hero{align-items:start;flex-direction:column}.hero h1{font-size:23px}.layout{grid-template-columns:1fr}.panel{padding:19px}.sidepanel{order:2}.row{grid-template-columns:1fr 1fr}}
-@media(max-width:390px){.row{grid-template-columns:1fr}.brand strong{font-size:19px}}
+:root{--green:#235c49;--light:#eaf3ee;--ink:#1c2b25;--muted:#6c7b73;--bg:#f6f8f5;--white:#fff;--line:#e1e9e3}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--ink)}
+header{background:var(--green);color:white;padding:34px 20px 28px}header .wrap,main{max-width:1000px;margin:auto}header small{letter-spacing:2px;font-weight:700;opacity:.8}header h1{font-size:clamp(30px,6vw,48px);margin:12px 0 8px}header p{max-width:650px;line-height:1.6;margin:0;color:#e0eee7}.tag{display:inline-block;border:1px solid #ffffff55;border-radius:50px;padding:7px 12px;font-size:12px;margin-top:16px}
+main{padding:24px 16px 60px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.top h2{margin:0;font-size:22px}.btn{border:0;border-radius:12px;background:var(--green);color:white;padding:12px 16px;font-weight:700;cursor:pointer}.btn:hover{opacity:.9}.btn.secondary{background:var(--light);color:var(--green)}.filters{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0}.filters input,.filters select,form input,form select,form textarea{border:1px solid var(--line);background:white;border-radius:11px;padding:12px;font:inherit;color:var(--ink)}.filters input{flex:1;min-width:180px}.filters select{min-width:140px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}.card{background:white;border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 3px 14px #183a2610}.card img{width:100%;height:190px;object-fit:cover;background:var(--light)}.cardbody{padding:15px}.card h3{margin:0 0 8px;font-size:18px}.meta{color:var(--muted);font-size:13px;line-height:1.65}.status{display:inline-block;padding:5px 9px;border-radius:30px;background:#fff1d9;color:#80551a;font-size:12px;font-weight:700;margin-top:9px}.status.returned{background:#e3f3e9;color:#246247}.card button{margin-top:12px;width:100%}.empty{text-align:center;padding:55px 15px;color:var(--muted);border:1px dashed #b7c9bd;border-radius:18px;grid-column:1/-1}.modal{position:fixed;inset:0;background:#0b2119aa;display:none;align-items:center;justify-content:center;padding:16px;z-index:10}.modal.open{display:flex}.panel{background:white;border-radius:20px;padding:22px;width:min(540px,100%);max-height:90vh;overflow:auto}.panel h2{margin-top:0}.panel form{display:grid;gap:13px}.panel label{display:grid;gap:6px;font-size:14px;font-weight:650}.panel input,.panel select,.panel textarea{width:100%}.panel textarea{min-height:75px;resize:vertical}.preview{width:100%;max-height:250px;object-fit:contain;border-radius:12px;background:var(--light);display:none}.actions{display:flex;gap:9px}.actions button{flex:1}.note{font-size:12px;color:var(--muted);line-height:1.5}.footer{margin-top:35px;text-align:center;color:var(--muted);font-size:13px;line-height:1.7}
 </style>
 </head>
 <body>
-<header><div class="brand"><div class="logo">G</div><div><strong>GINGS_ON</strong><small>LOST & FOUND CENTER</small></div></div><div class="topnote">우리 학교 분실물 · 습득물 통합 관리</div></header>
-<main>
-<section class="hero"><div><div class="eyebrow">CAMPUS CARE, CONNECTED</div><h1>분실물 / 습득물 등록</h1><p>잃어버린 물건을 찾고, 주인을 기다리는 물건을 연결해요.</p></div><div class="status">● 안전한 교내 공유 공간</div></section>
-<div class="layout">
-<section class="panel">
-<h2>물품 정보 입력</h2><p class="sub">필수 항목을 입력하면 게시판에 바로 등록돼요.</p>
-<div class="field"><label>등록 유형 <em>필수 선택</em></label><div class="typegrid">
-<button class="type active lost" type="button" data-type="lost"><span class="emoji">😢</span><b>분실물</b><span>내가 잃어버렸어요</span></button>
-<button class="type found" type="button" data-type="found"><span class="emoji">🙌</span><b>습득물</b><span>내가 주웠어요</span></button>
-</div></div>
-<form id="itemForm">
-<div class="field"><label>사진 <em>선택 · 최대 5MB</em></label><label class="upload" for="photo"><span class="cloud">☁️</span><b>사진을 올려주세요</b><small>클릭해서 파일 추가 (JPG, PNG)</small><input id="photo" type="file" accept="image/*"><img id="preview" class="preview" alt="업로드한 사진 미리보기"></label><div class="hint">사진을 올리면 물건을 더 쉽게 알아볼 수 있어요.</div></div>
-<div class="field"><label for="name">물품명 <em>필수</em></label><input id="name" maxlength="50" required placeholder="예: 검정 우산, 에어팟 케이스"></div>
-<div class="field"><label for="category">카테고리</label><select id="category"><option>기타</option><option>전자기기</option><option>의류</option><option>문구류</option><option>도서</option><option>지갑·카드</option><option>가방</option><option>액세서리</option></select></div>
-<div class="field"><label for="place" id="placeLabel">분실 위치 <em>필수</em></label><input id="place" maxlength="50" required placeholder="예: 3층 복도, 도서관"></div>
-<div class="row"><div class="field"><label for="date">날짜 <em>필수</em></label><input id="date" type="date" required></div><div class="field"><label for="storage">현재 보관 위치</label><select id="storage"><option>기타</option><option>교무실</option><option>분실물 보관함</option><option>직접 전달 가능</option></select></div></div>
-<div class="field"><label for="storageText">보관 위치 상세 <em>선택</em></label><input id="storageText" maxlength="50" placeholder="보관 위치를 직접 입력해주세요"></div>
-<button class="mapbtn" type="button" id="mapBtn">🗺️ 지도에서 위치 표시 (선택)</button>
-<div class="field" style="margin-top:18px"><label for="description">상세 설명</label><textarea id="description" maxlength="300" placeholder="물건의 색상, 특징, 발견 당시 상황 등을 적어주세요."></textarea><div class="hint" id="descCount">0 / 300</div></div>
-<div class="field"><label for="contact">연락처 <em>선택</em></label><input id="contact" maxlength="50" placeholder="예: 2학년 3반 홍길동"></div>
-<div class="actions"><button class="secondary" type="reset">초기화</button><button class="primary" type="submit">등록하기 →</button></div>
-</form>
-</section>
-<aside class="panel sidepanel">
-<div class="sidehead"><div><h2>최근 등록된 물품</h2><p class="sub" style="margin:4px 0 0">학교 안에서 물건의 주인을 찾아보세요.</p></div><span class="count" id="count">0 ITEMS</span></div>
-<div class="search"><input id="search" placeholder="물품명 또는 장소 검색"><button id="searchBtn">검색</button></div>
-<div class="filters"><button class="filter active" data-filter="all">전체</button><button class="filter" data-filter="lost">분실물</button><button class="filter" data-filter="found">습득물</button></div>
-<div class="items" id="items"><div class="empty">아직 등록된 물품이 없어요.<br>첫 번째 물품을 등록해보세요!</div></div>
-</aside>
-</div>
-</main>
-<footer>© 2026 GINGS_ON · LOST & FOUND CENTER<br>소중한 물건이 다시 주인을 만날 수 있도록</footer>
-<div class="toast" id="toast"></div>
+<header><div class="wrap"><small>공동체 • 재사용 • SDG 12</small><h1>gings_on <span style="font-size:.55em">↺</span></h1><p>물건을 잃어버렸나요? 발견했나요? 물건을 주인에게 돌려주고 재사용을 실천해요.</p><span class="tag">SDG 12 — 지속가능한 소비와 생산</span></div></header>
+<main><div class="top"><h2>우리 학교 분실물 게시판</h2><button class="btn" id="openForm">＋ 분실물 등록</button></div>
+<div class="filters"><input id="search" placeholder="물건 이름 또는 위치 검색…"><select id="category"><option value="">모든 분류</option><option>전자기기</option><option>문구류</option><option>가방·지갑</option><option>의류</option><option>액세서리</option><option>기타</option></select><select id="place"><option value="">모든 장소</option><option>교실</option><option>도서관</option><option>식당</option><option>체육관</option><option>학교 내 기타 장소</option><option>기타</option></select><select id="statusFilter"><option value="">모든 상태</option><option value="active">주인 찾는 중</option><option value="returned">반환 완료</option></select></div>
+<div class="grid" id="items"></div><div class="footer">물건에 두 번째 기회를 주세요. 새로 사기보다 다시 사용해요.<br>게시글은 현재 기기의 브라우저에 저장되는 시제품입니다.</div></main>
+<div class="modal" id="modal"><div class="panel"><h2>분실물 등록하기</h2><form id="postForm"><label>사진 (카메라 또는 갤러리)<input type="file" id="photo" accept="image/*" capture="environment" required></label><img class="preview" id="preview" alt="Photo preview"><label>물건 이름<input id="name" placeholder="예: 파란색 필통" required maxlength="60"></label><label>분류<select id="cat" required><option value="">분류 선택</option><option>전자기기</option><option>문구류</option><option>가방·지갑</option><option>의류</option><option>액세서리</option><option>기타</option></select></label><label>발견 장소<select id="pl" required><option value="">장소 선택</option><option>교실</option><option>도서관</option><option>식당</option><option>체육관</option><option>학교 내 기타 장소</option><option>기타</option></select></label><label>세부 위치<input id="location" placeholder="예: 2층 203호 옆" maxlength="120" required></label><label>발견 날짜<input type="date" id="date" required></label><label>추가 설명<textarea id="details" placeholder="색상이나 특징 등을 적어주세요. (개인정보는 올리지 마세요.)"></textarea></label><div class="actions"><button class="btn" type="submit">등록하기</button><button class="btn secondary" type="button" id="cancel">취소</button></div><p class="note">개인정보 보호를 위해 전화번호, 주소, 학생증 등 개인정보가 사진이나 설명에 노출되지 않도록 주의하세요.</p></form></div></div>
 <script>
-let selectedType='lost', currentFilter='all', records=[], photoData='';
+const DB='gings_on_posts_v1';let posts=[];let photoData='';
 const $=id=>document.getElementById(id);
-$('date').value=new Date().toISOString().slice(0,10);
-document.querySelectorAll('.type').forEach(btn=>btn.addEventListener('click',()=>{
- selectedType=btn.dataset.type;
- document.querySelectorAll('.type').forEach(x=>x.classList.remove('active'));
- btn.classList.add('active');
- $('placeLabel').firstChild.textContent=selectedType==='lost'?'분실 위치 ':'습득 위치 ';
-}));
-$('photo').addEventListener('change',e=>{
- const f=e.target.files[0]; if(!f)return;
- if(f.size>5*1024*1024){showToast('사진은 5MB 이하 파일만 올릴 수 있어요.');e.target.value='';return}
- const reader=new FileReader();reader.onload=()=>{photoData=reader.result;$('preview').src=photoData;$('preview').style.display='block';$('preview').parentElement.querySelector('.cloud').style.display='none';$('preview').parentElement.querySelector('b').textContent=f.name};reader.readAsDataURL(f);
-});
-$('description').addEventListener('input',()=>$('descCount').textContent=$('description').value.length+' / 300');
-$('mapBtn').addEventListener('click',()=>showToast('지도 기능은 학교 위치 정보와 연결해 사용할 수 있어요.'));
-$('itemForm').addEventListener('submit',e=>{
- e.preventDefault();
- const item={id:Date.now(),type:selectedType,name:$('name').value.trim(),category:$('category').value,place:$('place').value.trim(),date:$('date').value,storage:$('storage').value,storageText:$('storageText').value.trim(),description:$('description').value.trim(),contact:$('contact').value.trim(),photo:photoData};
- if(!item.name||!item.place){showToast('물품명과 위치를 입력해주세요.');return}
- records.unshift(item);render();e.target.reset();$('date').value=new Date().toISOString().slice(0,10);photoData='';$('preview').style.display='none';$('preview').parentElement.querySelector('.cloud').style.display='block';$('preview').parentElement.querySelector('b').textContent='사진을 올려주세요';$('descCount').textContent='0 / 300';showToast('물품이 게시판에 등록되었어요!');
-});
-document.querySelectorAll('.filter').forEach(b=>b.addEventListener('click',()=>{currentFilter=b.dataset.filter;document.querySelectorAll('.filter').forEach(x=>x.classList.toggle('active',x===b));render()}));
-$('searchBtn').addEventListener('click',render);$('search').addEventListener('keydown',e=>{if(e.key==='Enter')render()});
-function render(){
- const q=$('search').value.trim().toLowerCase();
- const list=records.filter(x=>(currentFilter==='all'||x.type===currentFilter)&&[x.name,x.place,x.category,x.description].join(' ').toLowerCase().includes(q));
- $('count').textContent=list.length+' ITEMS';
- $('items').innerHTML=list.length?list.map(x=>`<article class="item"><div class="thumb">${x.photo?`<img src="${x.photo}" alt="">`:'📦'}</div><div><div class="itemtop"><h3>${esc(x.name)}</h3><span class="tag ${x.type}">${x.type==='lost'?'분실물':'습득물'}</span></div><div class="meta">${esc(x.category)} · ${esc(x.place)}<br>${esc(x.date)} · 보관: ${esc(x.storageText||x.storage)}</div>${x.description?`<div class="itemdesc">${esc(x.description)}</div>`:''}${x.contact?`<div class="meta">연락: ${esc(x.contact)}</div>`:''}</div></article>`).join(''):'<div class="empty">검색 결과가 없어요.</div>';
-}
-function esc(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function showToast(t){$('toast').textContent=t;$('toast').classList.add('show');setTimeout(()=>$('toast').classList.remove('show'),2600)}
-</script>
-</body></html>
+function load(){try{posts=JSON.parse(localStorage.getItem(DB)||'[]')}catch(e){posts=[]}render()}
+function save(){try{localStorage.setItem(DB,JSON.stringify(posts))}catch(e){alert('저장 공간이 부족합니다. 더 작은 사진을 선택해 주세요.')}render()}
+function render(){const q=$('search').value.toLowerCase(),c=$('category').value,p=$('place').value,s=$('statusFilter').value;let filtered=posts.filter(x=>(x.name.toLowerCase().includes(q)||x.location.toLowerCase().includes(q)||x.details.toLowerCase().includes(q))&&(!c||x.category===c)&&(!p||x.place===p)&&(!s||(s==='returned'?x.returned:!x.returned)));$('items').innerHTML='';if(!filtered.length){$('items').innerHTML='<div class="empty">등록된 물건이 없습니다.<br>다른 검색어를 입력하거나 분실물을 등록해 보세요.</div>';return}filtered.slice().reverse().forEach(x=>{const card=document.createElement('article');card.className='card';card.innerHTML=`<img src="${x.photo}" alt="Found item"><div class="cardbody"><h3></h3><div class="meta"></div><span class="status ${x.returned?'returned':''}">${x.returned?'✓ 반환 완료':'● 주인 찾는 중'}</span><button class="btn ${x.returned?'secondary':''}" data-id="${x.id}">${x.returned?'찾는 중으로 변경':'반환 완료로 표시'}</button></div>`;card.querySelector('h3').textContent=x.name;card.querySelector('.meta').textContent=`${x.category} · ${x.place} · ${x.location} · ${x.date}${x.details?'\n'+x.details:''}`;card.querySelector('button').onclick=()=>{const item=posts.find(z=>z.id===x.id);item.returned=!item.returned;save()};$('items').append(card)})}
+$('openForm').onclick=()=>{$('modal').classList.add('open');$('date').value=new Date().toISOString().slice(0,10)};$('cancel').onclick=()=>close();function close(){$('modal').classList.remove('open');$('postForm').reset();$('preview').style.display='none';photoData=''}$('modal').addEventListener('click',e=>{if(e.target===$('modal'))close()});
+$('photo').onchange=e=>{const file=e.target.files[0];if(!file)return;if(file.size>5*1024*1024){alert('5MB 이하의 사진을 선택해 주세요.');e.target.value='';return}const reader=new FileReader();reader.onload=ev=>{photoData=ev.target.result;$('preview').src=photoData;$('preview').style.display='block'};reader.readAsDataURL(file)};
+$('postForm').onsubmit=e=>{e.preventDefault();if(!photoData)return;posts.push({id:Date.now(),photo:photoData,name:$('name').value.trim(),category:$('cat').value,place:$('pl').value,location:$('location').value.trim(),date:$('date').value,details:$('details').value.trim(),returned:false});save();close()};['search','category','place','statusFilter'].forEach(id=>$(id).addEventListener('input',render));load();
+</script></body></html>
